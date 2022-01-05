@@ -52,6 +52,8 @@ L.Draw.Svg.include({
 `bounds` SVG bounds on map  
 `uuid` optional UUID for identifying the SVG-object later  
 `options` described below  
+
+#### Options
 ```
 options:{
 	svgViewBox:{
@@ -63,15 +65,15 @@ options:{
 ```
 
 `viewBox`  
-> viewbox can be `x y w h` to directly set viewBox attribute of svg, `false` to use bounds instead, or `calculate` to derive from svg bbox  
+* viewbox can be `x y w h` to directly set viewBox attribute of svg, `false` to use bounds instead, or `calculate` to derive from svg bbox  
 
 `fitBounds`  
-> false means bounds are used directly, true means only center latlng of bounds are used, and actual bounds are fit to bbox of svg  
+* false means bounds are used directly, true means only center latlng of bounds are used, and actual bounds are fit to bbox of svg  
 
 `scaleBounds`  
-> scale the size of the svg bounds on the map  
+* scale the size of the svg bounds on the map  
 
-
+#### Methods
 `fitBounds()`  
 > ajust bounds to SVG vieBox measures  
 
@@ -81,10 +83,11 @@ options:{
 `setLatLng()`  
 > set SVG(center) latitude and longtitude by ajusting bounds  
 
+<i>All other methods inherited from L.SVGOverlay</i>  
 
-all other methods inherited from L.SVGOverlay  
+### L.Draw.Svg ajustable properties
+The following properties of the L.Draw.Svg instance can be modified, to change the SvgObject properties to draw when the toolbar is clicked.  
 
-### L.Draw.Svg
 `this._templateBounds`  
 > bounds of the svg object on the map  
 
