@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<title>svg draw example</title>
+
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+
+<!--Add leaflet -->
+<link href='css/leaflet.css' rel='stylesheet' crossorigin=''/>
+<script src='lib/leaflet-src.js' crossorigin=''></script>
+
+<!--Add draw plugin -->
+<link href='css/leaflet.draw-src.css' rel='stylesheet' crossorigin=''/>
+<script src='lib/leaflet.draw-src.js' crossorigin=""></script>
+
+<!--Add Svg plugin -->
+<script src='lib/L.Modal.js' crossorigin=''></script>
+<link href='css/leaflet.modal.css' rel='stylesheet' crossorigin=''/>
+
+<!--Add Svg plugin -->
+<script src='lib/leaflet.draw.svg.js' crossorigin=''></script>
+<link href='css/leaflet.draw.svg.css' rel='stylesheet' crossorigin=''/>
+
+
+<style>
+  #map { 
+    height: 800px; 
+  }
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function(event) {
+  var leafletmap = L.map('map', { 
+    renderer: L.svg(),
+  }).setView([55.980, 1.0], 8);
+
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'openstreetmap',
+    maxZoom: 20,
+    id: 'openstreetmap',
+    tileSize: 512,
+    zoomOffset: -1,
+  }).addTo(leafletmap);
+
+  //https://codepen.io/mochaNate/pen/bWNveg
+  editableLayers = new L.FeatureGroup();
+  leafletmap.addLayer(editableLayers);
+
+  let options = {
+    position: 'topright',
+    draw: {
+      circle: true, 
+      rectangle: true,
+      marker: true
+    },
+    edit: {
+      featureGroup: editableLayers, //REQUIRED!! 
+      remove: true
+    }
+  };
+  let drawControl = new L.Control.Draw(options);
+  leafletmap.addControl(drawControl);
+
+  //register events
+  leafletmap.on(L.Draw.Event.CREATED, function(e){
+    editableLayers.addLayer(e.layer);
+  });
+});
+
+//initialise the L.Draw.Svg.enable function with a dialog for selection of a local svg to display on the map
+L.Draw.Svg.include({
+    enable: function(){
+      let drawsvg = this;
+      
+      this._map.fire('modal', {
+        title: 'Open SVG',
+        content: [
+          'Select an SVG to show it on the map<br>',
+          '<table>',
+          '  <tr>',
+          '    <td>file:</td><td><input type="file" id="file-input" /></td>',
+          '  <tr></tr>',
+          '    <td>scale:</td><td><input type="number" id="scale" name="scale" min="0.000001" max="10.0" value="0.01"></td>',
+          '  </tr>',
+          '</table><br>'].join(''),
+
+        template: [
+          '<div class="modal-header"><h2>{title}</h2></div>',
+          '<hr>',
+          '<div class="modal-body">{content}</div>',
+          '<div class="modal-footer">',
+          '  <button class="topcoat-button--large {OK_CLS}">{okText}</button>',
+          '  <button class="topcoat-button--large {CANCEL_CLS}">{cancelText}</button>',
+          '</div>'
+        ].join(''),
+      
+        okText: 'Ok',
+        cancelText: 'Cancel',
+        OK_CLS: 'modal-ok',
+        CANCEL_CLS: 'modal-cancel',
+      
+        width: 300,
+      
+        onShow: function(evt) {
+          let modal = evt.modal;
+          let imported = null;
+
+          L.DomEvent
+          .on(modal._container.querySelector('#file-input'), 'change', function(e) {
+            let file = e.target.files[0];
+            if (!file) {
+              return;
+            }
+            let reader = new FileReader();
+            reader.onload = function(e) {
+              imported = e.target.result;
+            };
+            reader.readAsText(file);
+          })
+          .on(modal._container.querySelector('.modal-ok'), 'click', function() {
+            if(imported != null){
+              drawsvg._svgViewBox = "calculate";
+              drawsvg._svgFitBounds = true;
+              drawsvg._scale = modal._container.querySelector('#scale').valueAsNumber;
+              drawsvg._template = imported;
+              L.Draw.SimpleShape.prototype.enable.call(drawsvg);
+            }
+            modal.hide();
+          })
+          .on(modal._container.querySelector('.modal-cancel'), 'click', function() {
+            modal.hide();
+          });
+        }
+      });
+    }
+});
+
+</script>
+
+</head>
+<body>
+<div id='map'></div>
+</body>
+</html>
+
