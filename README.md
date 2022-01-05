@@ -5,12 +5,13 @@ It allows to define a SVG as XML text, and converts it into an SVG object that c
 an editable feature.
  
 ## Requirements
-* Leaflet version 0.7  
-* Leaflet.Draw version 0.4
+* Leaflet version 0.7 or higher  
+* Leaflet.Draw version 0.4 or higher
 
 ## Demo
 [example 1](https://robidev.github.io/Leaflet.Draw.Svg/simple/index.html): basic example for adding an SVG to the map  
 [example 2](https://robidev.github.io/Leaflet.Draw.Svg/local_svg/index.html): example that shows how to add a local SVG file via a modal dialog  
+Both demos add an icon to the 'add' toolbar that resides on the top-left of the map, in the form of a square with a diagonal line. Click this icon to trigger the plugin
 
 ## Including the plugin
 Add the following code to your HTML to inlcude the plugin;
