@@ -1,35 +1,35 @@
 # Leaflet.Draw.Svg
 
-This is a plugin to Leaflet.Draw to allow adding/moving/removing custom SVG files on a leaflet map.
+This is a plugin to Leaflet.Draw to allow adding/moving/removing custom SVG files on a leaflet map.  
 It allows to define a SVG as XML text, and converts it into an SVG object that can be displayed by leaflet as
 an editable feature.
  
-## requirements
-Leaflet version 0.7
+## Requirements
+Leaflet version 0.7  
 Leaflet.Draw version 0.4
 
 ## Demo
-see example
+example 1:  
+example 2:  
 
-# including the plugin
-
+## Including the plugin
+Add the following code to your HTML to inlcude the plugin;
 ```
 <script src='lib/leaflet.draw.svg.js' crossorigin=''></script>
 <link href='css/leaflet.draw.svg.css' rel='stylesheet' crossorigin=''/>
 ```
 
-# usage example
-
-Ensure L.map uses the L.svg renderer;
-
-
-Initialise the L.Draw.Svg.enable function with the svg we want to draw. here we can also include a dialog and such for selection
-```var leafletmap = L.map('map', { 
-    renderer: L.svg()
-  });
+# Usage example
+Ensure L.map uses the L.svg renderer  
+  
+Initialise the L.Draw.Svg.enable function with the svg we want to draw. here we can also include a dialog and such for selection  
+```
+var leafletmap = L.map('map', { 
+  renderer: L.svg()
+});
 ```
 
-You can override the L.Draw.Svg class, to hook into the draw-routine and add your own data, or dialog box, like so;
+You can override the L.Draw.Svg class, to hook into the draw-routine and add your own data, or dialog box, like so:
 ```
 L.Draw.Svg.include({
   enable: function(){
@@ -44,23 +44,42 @@ L.Draw.Svg.include({
 });
 ```
 
-## options
+## Options
 
 ### L.SvgObject
-L.SvgObject(svgString, bounds, uuid, options)
-viewBox: false, // viewbox can be "x y w h" to directly set viewBox attribute of svg, 'false' to use bounds instead, or "calculate" to derive from svg bbox
-fitBounds: false, // false means bounds are used directly, true means only center latlng of bounds are used, and actual bounds are fit to bbox of svg
-scaleBounds: 1.0 // scale the size of the svg bounds on the map
+`L.SvgObject(svgString, bounds, uuid, options)` instantiate a new SVG object.  
+Arguments are;  
+    svgString: SVG XML data  
+    bounds: SVG bounds on map  
+    uuid: optional UUID for identifying the SVG-object later  
+    options: options, described below  
+```
+options:{
+	svgViewBox:{
+		viewBox: false,
+		fitBounds: false, 
+		scaleBounds: 1.0 
+	},
+},
+```
 
-fitBounds()
-setLatLng()
-getLatLng()
-all other methods inherited from L.SVGOverlay
+`viewBox` viewbox can be `x y w h` to directly set viewBox attribute of svg, `false` to use bounds instead, or `calculate` to derive from svg bbox  
+`fitBounds` false means bounds are used directly, true means only center latlng of bounds are used, and actual bounds are fit to bbox of svg  
+`scaleBounds` scale the size of the svg bounds on the map  
+
+
+`fitBounds()` ajust bounds to SVG vieBox measures  
+`getLatLng()` get svg latitude and longtitude from bounds center  
+`setLatLng()` set SVG(center) latitude and longtitude by ajusting bounds  
+
+
+all other methods inherited from L.SVGOverlay  
 
 ### L.Draw.Svg
-this._templateBounds = [[0,0],[100,100]]; bounds of the svg object on the map
-this._svgViewBox = "calculate"; viewbox can be "x y w h" to directly set viewBox attribute of svg, 'false' to use bounds values instead, or "calculate" to derive from svg bbox
-this._svgFitBounds = true; false means bounds are used directly, true means only center latlng of bounds are used, and actual bounds are fit to bbox of svg
-this._scale: scale the size of the svg bounds on the map
-this._template: containts SVG data
+`this._templateBounds` bounds of the svg object on the map  
+`this._svgViewBox` viewbox can be "x y w h" to directly set viewBox attribute of svg, 'false' to use bounds values instead, or "calculate" to derive from svg bbox  
+`this._svgFitBounds` false means bounds are used directly, true means only center latlng of bounds are used, and actual bounds are fit to bbox of svg  
+`this._scale` scale the size of the svg bounds on the map  
+`this._template` containts SVG data  
+
 
