@@ -47,12 +47,11 @@ L.Draw.Svg.include({
 ## Options
 
 ### L.SvgObject
-`L.SvgObject(svgString, bounds, uuid, options)` instantiate a new SVG object.  
-Arguments are;  
-> svgString: SVG XML data  
-> bounds: SVG bounds on map  
-> uuid: optional UUID for identifying the SVG-object later  
-> options: described below  
+`L.SvgObject(svgString, bounds, uuid, options)` instantiate a new SVG object. Arguments are;  
+`svgString` SVG XML data  
+`bounds` SVG bounds on map  
+`uuid` optional UUID for identifying the SVG-object later  
+`options` described below  
 ```
 options:{
 	svgViewBox:{
@@ -65,16 +64,20 @@ options:{
 
 `viewBox`  
 > viewbox can be `x y w h` to directly set viewBox attribute of svg, `false` to use bounds instead, or `calculate` to derive from svg bbox  
+
 `fitBounds`  
 > false means bounds are used directly, true means only center latlng of bounds are used, and actual bounds are fit to bbox of svg  
+
 `scaleBounds`  
 > scale the size of the svg bounds on the map  
 
 
 `fitBounds()`  
 > ajust bounds to SVG vieBox measures  
+
 `getLatLng()`  
 > get svg latitude and longtitude from bounds center  
+
 `setLatLng()`  
 > set SVG(center) latitude and longtitude by ajusting bounds  
 
@@ -84,12 +87,16 @@ all other methods inherited from L.SVGOverlay
 ### L.Draw.Svg
 `this._templateBounds`  
 > bounds of the svg object on the map  
+
 `this._svgViewBox`  
 > viewbox can be "x y w h" to directly set viewBox attribute of svg, 'false' to use bounds values instead, or "calculate" to derive from svg bbox  
+
 `this._svgFitBounds`  
 > false means bounds are used directly, true means only center latlng of bounds are used, and actual bounds are fit to bbox of svg  
+
 `this._scale`  
 > scale the size of the svg bounds on the map  
+
 `this._template`  
 > containts SVG data  
 
