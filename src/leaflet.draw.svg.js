@@ -197,8 +197,8 @@ L.drawLocal.draw.toolbar.buttons.svg = "Draw an svg";
 //ensure edit exists
 L.Edit = L.Edit || {};
 /**
- * @class L.Edit.CircleMarker
- * @aka Edit.Circle
+ * @class L.Edit.Svg
+ * @aka Edit.Svg
  * @inherits L.Edit.SimpleShape
  */
 L.Edit.Svg = L.Edit.SimpleShape.extend({
